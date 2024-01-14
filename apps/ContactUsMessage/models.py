@@ -1,0 +1,14 @@
+from django.db import models
+from apps.Basemodel.models import BaseModel
+
+
+class ContactUsMessage(BaseModel):
+    name = models.CharField(max_length=255, verbose_name='Название')
+    contact_phone = models.CharField(max_length=20, verbose_name='Номер телефона')
+    email = models.EmailField(verbose_name='Электронная почта')
+    message = models.TextField(verbose_name='Сообщение')
+
+    class Meta:
+        verbose_name = 'Связаться с нами'
+        verbose_name_plural = 'Связаться с нами'
+        ordering = ['-id']

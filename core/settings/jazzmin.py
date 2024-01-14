@@ -7,7 +7,7 @@ JAZZMIN_SETTINGS = {
     "copyright": "IntermetalPlus",
     # "search_model": "src.services",
     "topmenu_links": [
-        {"name": "Admin Panel", "url": "Home", "permissions": ["auth.view_user"]},
+        {"name": "Admin Panel", "url": "http://127.0.0.1:8000/admin/", "permissions": ["auth.view_user"]},
         {"model": "auth.User"},
     ],
     "usermenu_links": [

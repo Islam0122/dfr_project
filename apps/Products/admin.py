@@ -1,6 +1,13 @@
 from django.contrib import admin
-from .models import Service
+from .models import Product, Category
 from django.utils.translation import gettext_lazy as _
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'updated_at')
+    search_fields = ('title',)
+
 
 class RecommendationFilter(admin.SimpleListFilter):
     title = _('Рекомендация')
@@ -8,8 +15,8 @@ class RecommendationFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
-            ('all', _('Все услуги')),
-            ('recommended', _('Рекомендованные услуги')),
+            ('all', _('Все товары')),
+            ('recommended', _('Рекомендованные товары')),
         )
 
     def queryset(self, request, queryset):
@@ -20,11 +27,12 @@ class RecommendationFilter(admin.SimpleListFilter):
             return queryset.all()
 
 
-@admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('name','price', 'is_recommended', 'created_at', 'updated_at')
-    list_filter = (RecommendationFilter,)
-    search_fields = ('name',)
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'price', 'is_recommended', 'created_at', 'updated_at')
+    search_fields = ('title', 'category__title')
+    list_filter = ('category__title','created_at',RecommendationFilter,)
+
 
     def formfield_for_dbfield(self, db_field, request, **kwargs):
         if db_field.name == 'is_recommended':
@@ -33,8 +41,8 @@ class ServiceAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if obj.is_recommended:
-            recommended_count = Service.objects.filter(is_recommended=True).count()
-            if recommended_count >= 10:
-                self.message_user(request, "Cannot set more than three services as recommended.", level="error")
+            recommended_count = Product.objects.filter(is_recommended=True).exclude(pk=obj.pk).count()
+            if recommended_count >= 100:
+                self.message_user(request, "Cannot set more than 100 products as recommended.", level="error")
                 obj.is_recommended = False
         super().save_model(request, obj, form, change)

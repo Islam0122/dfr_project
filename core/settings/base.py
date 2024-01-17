@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'apps.Basemodel',
     'apps.Products',
     'apps.Sellers',
+    'apps.Search_Filter',
 
 ]
 

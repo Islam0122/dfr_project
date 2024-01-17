@@ -29,10 +29,26 @@ class RecommendationFilter(admin.SimpleListFilter):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'price', 'is_recommended', 'created_at', 'updated_at')
-    search_fields = ('title', 'category__title')
-    list_filter = ('category__title','created_at',RecommendationFilter,)
+    list_display = ('name', 'category', 'price', 'is_recommended', 'created_at', 'updated_at')
+    search_fields = ('name', 'category__title')
+    list_filter = ('category__title', 'created_at', RecommendationFilter,)
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('name', 'category', 'description', 'price'),
+        }),
+        ('Изображения', {
+            'fields': ('img1', 'img2', 'img3', 'img4'),
+        }),
+        ('Дополнительные настройки', {
+            'fields': ('is_recommended',),
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',),
+        }),
+    )
 
+    readonly_fields = ('created_at', 'updated_at')
 
     def formfield_for_dbfield(self, db_field, request, **kwargs):
         if db_field.name == 'is_recommended':

@@ -18,6 +18,5 @@ class ProductViewSet(viewsets.ModelViewSet):
 class RecommendedProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     lookup_field = 'pk'
-
     def get_queryset(self):
         return Product.objects.filter(is_recommended=True)

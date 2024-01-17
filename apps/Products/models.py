@@ -13,18 +13,18 @@ class Category(BaseModel):
 
 
 def product_image_path(instance, filename):
-    return f'Product_images/{slugify(instance.title)}/{timezone.now().strftime("%Y%m%d%H%M%S")}_{filename}'
+    return f'Product_images/{slugify(instance.name)}/{timezone.now().strftime("%Y%m%d%H%M%S")}_{filename}'
 
 
 class Product(BaseModel):
-    title = models.CharField(_('Название товара'), max_length=100)
-    img1 = models.ImageField(_('Изображение 1'), upload_to=product_image_path,blank=False,null=False)
-    img2 = models.ImageField(_('Изображение 2'), upload_to=product_image_path,blank=False,null=False)
-    img3 = models.ImageField(_('Изображение 3'), upload_to=product_image_path,blank=False,null=False)
-    img4 = models.ImageField(_('Изображение 4'), upload_to=product_image_path,blank=False,null=False)
+    name = models.CharField(_('Название товара'), max_length=100)
+    img1 = models.ImageField(_('Изображение 1'), upload_to=product_image_path, blank=True, null=True)
+    img2 = models.ImageField(_('Изображение 2'), upload_to=product_image_path, blank=True, null=True)
+    img3 = models.ImageField(_('Изображение 3'), upload_to=product_image_path, blank=True, null=True)
+    img4 = models.ImageField(_('Изображение 4'), upload_to=product_image_path, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    description = models.TextField(_('Описание товара'),blank=False,null=False)
-    price = models.DecimalField(_('Цена'), max_digits=10, decimal_places=2, default=None, blank=True)
+    description = models.TextField(_('Описание товара'), blank=True, null=True)
+    price = models.CharField(_('Цена'),max_length=400)
     is_recommended = models.BooleanField(_('Рекомендовано'), default=False)
 
     class Meta:
@@ -32,4 +32,4 @@ class Product(BaseModel):
         verbose_name_plural = _("товары")
 
     def __str__(self):
-        return self.title
+        return self.name

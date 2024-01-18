@@ -34,7 +34,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category__title', 'created_at', RecommendationFilter,)
     fieldsets = (
         ('Основная информация', {
-            'fields': ('name', 'category', 'description', 'price'),
+            'fields': ('name', 'category', 'description', 'price','user'),
         }),
         ('Изображения', {
             'fields': ('img1', 'img2', 'img3', 'img4'),
@@ -62,3 +62,4 @@ class ProductAdmin(admin.ModelAdmin):
                 self.message_user(request, "Cannot set more than 100 products as recommended.", level="error")
                 obj.is_recommended = False
         super().save_model(request, obj, form, change)
+

@@ -1,8 +1,11 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.utils.text import slugify
+import os
 from django.utils import timezone
 from apps.Basemodel.models import BaseModel
+from django.db import models
+from django.utils.text import slugify
+from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
+from django.conf import settings
 
 
 class Category(BaseModel):
@@ -26,6 +29,8 @@ class Product(BaseModel):
     description = models.TextField(_('Описание товара'), blank=True, null=True)
     price = models.CharField(_('Цена'),max_length=400)
     is_recommended = models.BooleanField(_('Рекомендовано'), default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='products',
+                             verbose_name='Пользователь (продавец)')
 
     class Meta:
         verbose_name = _("товар")

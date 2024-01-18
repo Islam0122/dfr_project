@@ -10,10 +10,15 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'pk'
 
+    def perform_create(self, serializer):
+        # При создании товара устанавливаем user в текущего пользователя
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        return Product.objects.all()
 
 class RecommendedProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer

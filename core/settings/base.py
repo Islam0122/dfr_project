@@ -29,9 +29,9 @@ INSTALLED_APPS = [
     'drf_yasg',
     'phonenumber_field',
     'apps.Basemodel',
+    'apps.About_us',
     'apps.Products',
-    'apps.Sellers',
-    'apps.Search_Filter',
+
 
 ]
 

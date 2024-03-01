@@ -31,6 +31,9 @@ INSTALLED_APPS = [
     'apps.Basemodel',
     'apps.About_us',
     'apps.Products',
+    'apps.Lesson',
+    'apps.Group'
+
 
 
 ]

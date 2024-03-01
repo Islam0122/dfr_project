@@ -8,6 +8,8 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('api/v1/about_us/', include("apps.About_us.urls")),
                   path('api/v1/products/', include("apps.Products.urls")),
+                  path('api/v1/lesson/', include("apps.Lesson.urls")),
+                  path('api/v1/group/', include("apps.Group.urls"))
               ] + urls_swagger
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

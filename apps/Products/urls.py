@@ -3,7 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path('category/', views.CategoryViewSet.as_view({
+    path('', views.ProductWithLessonCountViewSet.as_view({
         'get': 'list'
     })),
+    path('<int:pk>/', views.ProductWithLessonCountViewSet.as_view({'get': 'retrieve'}))
     ]

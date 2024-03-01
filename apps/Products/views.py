@@ -1,9 +1,7 @@
-from django.shortcuts import render
-from rest_framework import viewsets, status
-from .models.models import *
-from .serializers import *
+from rest_framework import viewsets
+from .models import Product
+from .serializers import ProductWithLessonCountSerializer
 
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class ProductWithLessonCountViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductWithLessonCountSerializer

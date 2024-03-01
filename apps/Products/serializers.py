@@ -1,13 +1,17 @@
 from rest_framework import serializers
-from .models.models import Category
+from .models import Product
 
+# class ProductSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Product
+#         fields = '__all__'
 
-# Category
-class CategorySerializer(serializers.ModelSerializer):
-    parent_category = serializers.SerializerMethodField()
+class ProductWithLessonCountSerializer(serializers.ModelSerializer):
+    lesson_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = Category
-        fields = ('id', 'title', 'parent_category')
-    def get_parent_category(self, obj):
-        return obj.parent_category.title if obj.parent_category else None
+        model = Product
+        fields = ['id', 'name', 'start_date', 'cost', 'lesson_count']
+
+    def get_lesson_count(self, obj):
+        return obj.lessons.count()
